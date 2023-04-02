@@ -38,3 +38,19 @@ approach2:
 uncomment the lines inside the flow function and run the script data_pipline.py Afer adding the required paramters like the name of dataset, target path in which the data will be downloaded, and if of your bucket to upload the dataset
 
 # spark job on dataproc
+for the data processing, I will use Dataproc google cloud service to create a spark cluster and submit the job. I used the python client libraries to create, submit, and delete the cluster after finishing the job.
+
+# How to run this project
+First of all create virtual env and install requirements. pip install -r requirements.txt
+Then follow these steps:
+1- create a google project
+2- create serive account and make it as owner
+3- run this in cli export GOOGLE_APPLICATION_CREDENTIALS="<path/to/authkeys>.json" please replace the path of json file
+4- using the terrafom files inside:- 
+please run terraform init, then terraform plan. and finally terraform apply
+5- check your GCP and then GCS and bigquery 
+6- After creating the GCS and bigquery, we will move the dataset from kaggle to GCS:-
+Please follow the steps in section " moving data from local machine to gcs"
+7- Then, run the data_pipeline.py script
+8- The data will be cleaned and partioned to moved to Bigquery
+9- open google looker studio

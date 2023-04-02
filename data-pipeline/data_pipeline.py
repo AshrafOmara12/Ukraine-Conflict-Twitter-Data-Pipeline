@@ -9,6 +9,21 @@ import shutil
 from tqdm import tqdm
 import zipfile
 from kaggle.api.kaggle_api_extended import KaggleApi
+import argparse
+from datetime import timedelta
+# parser = argparse.ArgumentParser()
+
+# parser.add_argument('--bucket_name', required=True)
+# parser.add_argument('--input_files', required=True)
+# parser.add_argument('--output', required=True)
+
+
+# args = parser.parse_args()
+# bucket_name = args.bucket_name
+# input_files = args.input_files
+# output = args.output
+
+
 
 @task()
 def download_dataset(name_of_dataset: str, path: str):
@@ -81,9 +96,9 @@ def upload_blob(bucket_name, folder_name):
                 f"File {file} uploaded to {check_name+'.gzip'}."
             )
 
-@task(name="dataproc spark job", description="In this task, I will create a spark cluster, submit a job and then deleting it",
-      timeout_seconds=3600, log_prints=True)
+@task(name="dataproc spark job", description="In this task, I will create a spark cluster, submit a job and then deleting it",timeout=timedelta(minutes=30), log_prints=True)
 def spark_job_cluster(project_id, region, cluster_name, gcs_bucket, folder, spark_filename):
+    ''' The default max time out for prefect task is 15 mins or 900 sec. I add 3600 sec as 1 hour for this task'''
     # Create the cluster client.
     cluster_client = dataproc_v1.ClusterControllerClient(
         client_options={"api_endpoint": "{}-dataproc.googleapis.com:443".format(region)}
@@ -114,7 +129,7 @@ def spark_job_cluster(project_id, region, cluster_name, gcs_bucket, folder, spar
     # Create the job config.
     job = {
         "placement": {"cluster_name": cluster_name},
-        "pyspark_job": {"main_python_file_uri": "gs://{}/{}/{}".format(gcs_bucket,folder ,spark_filename), 
+        "pyspark_job": {"main_python_file_uri": "gs://{}/{}/{}".format(gcs_bucket,folder ,spark_filename),
                         "jar_file_uris": ["gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar"]},
     }
 
