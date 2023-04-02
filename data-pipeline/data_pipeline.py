@@ -4,7 +4,8 @@ import re
 from prefect import task, flow
 import pandas as pd
 
-@task()
+@task(name="dataproc spark job", description="In this task, I will create a spark cluster, submit a job and then deleting it",
+      timeout_seconds=3600, log_prints=True)
 def spark_job_cluster(project_id, region, cluster_name, gcs_bucket, folder, spark_filename):
     # Create the cluster client.
     cluster_client = dataproc_v1.ClusterControllerClient(
@@ -69,7 +70,7 @@ def spark_job_cluster(project_id, region, cluster_name, gcs_bucket, folder, spar
 
     print("Cluster {} successfully deleted.".format(cluster_name))
 
-@task()
+@task(name='move files', description= 'after running the job on delta load, we will move them to inial files directory')
 def move_blob(bucket_name, blob_name, destination_bucket_name, destination_blob_name,):
     """Moves a blob from one bucket to another with a new name."""
     storage_client = storage.Client()
@@ -93,8 +94,8 @@ def move_blob(bucket_name, blob_name, destination_bucket_name, destination_blob_
         )
     )
 
-@flow()
-def spark_job():
+@flow(name="data pipeline flow")
+def data_pipeline():
     df_intial = pd.read_csv('gs://dtc_data_lake_ukraine-tweets-381418/code/load.csv')
     if df_intial.loc[:, 'check'].item() ==0:
         print("This is the task for inital load that will run once")
@@ -110,4 +111,4 @@ def spark_job():
             move_blob("dtc_data_lake_ukraine-tweets-381418",blob.name,  "dtc_data_lake_ukraine-tweets-381418",f"code/{file_name}")
 
 if __name__ == "__main__":
-    spark_job()
+    data_pipeline()
