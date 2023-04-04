@@ -31,11 +31,11 @@ In this project, I will create a data pipeline to move data from kaggle to gcs t
 # Moving Dataset from Kaggle to GCS
 As the dataset already stored as csvs in kaggle, I found that it would be more easily for reproducing the pipeline again to move the data from kaggle to gcs direcly with downloading it to local machine or server (VM instance) that would take money and time. However, I will keep the downloading scenario also if someone will be happy with that.
 ## approach1: If you are interested in kaggle please follow the following steps:
-1- sign in kaggle and set your account.
-2- create new juypter notebook inside kaggle Home.
-3- inside the notebook add the dataset "🇺🇦 Ukraine Conflict Twitter Dataset"
-4- from add-ons choose Google Cloud services and attach cloud storage to your notebook
-5- use the script from data pipeline/move_dataset_to_gcs.ipynb and run it in your notebook, the dataset will move directly. it will take no time compared to the other solution.
+- sign in kaggle and set your account.
+- create new juypter notebook inside kaggle Home.
+- inside the notebook add the dataset "🇺🇦 Ukraine Conflict Twitter Dataset"
+- from add-ons choose Google Cloud services and attach cloud storage to your notebook
+- use the script from data pipeline/move_dataset_to_gcs.ipynb and run it in your notebook, the dataset will move directly. it will take no time compared to the other solution.
 
 ## approach2: 
 uncomment the lines inside the flow function and run the script data_pipline.py as mention in the section "How to run this project" Afer adding the required paramters like the name of dataset, target path in which the data will be downloaded, and if of your bucket to upload the dataset
