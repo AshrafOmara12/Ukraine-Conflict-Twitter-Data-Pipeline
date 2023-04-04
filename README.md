@@ -1,47 +1,49 @@
 # Ukraine-Conflict-Twitter-Data-Pipeline
-In this project, I will create a data pipeline to move data from kaggle to gcs then to BigQuery stored as table. The dataset consists around 400 csv files that contains the tweets content related to the Ukraine Conflict from frin April 2022 till now. The dataset is updated everyday on kaggle dataset [https://www.kaggle.com/datasets/bwandowando/ukraine-russian-crisis-twitter-dataset-1-2-m-rows] and I will move the files on daily basis also to gcs. I will use spark job on Dataproc cluster to process the data from gcs to bigquery and make all of the required transformation and partioning before pushing the data to Bigquery.The dataset contains different cases in the text columns that will cleaned and create sentiment analysis on the tweets content to check the sentiment from the begining of the war till now. Then, I will use Google Looker Studio to connect to Bigqquery and build the dashboard. 
+In this project, I will create a data pipeline to move data from kaggle to gcs then to BigQuery stored as table. The dataset consists around 400 csv files that contains the tweets content related to the Ukraine Conflict from frin April 2022 till now. The dataset is updated everyday on kaggle dataset [https://www.kaggle.com/datasets/bwandowando/ukraine-russian-crisis-twitter-dataset-1-2-m-rows] with size around 20 GB,  and I will move the files on daily basis also to gcs. I will use spark job on Dataproc cluster to process the data from gcs to bigquery and make all of the required transformation and partioning before pushing the data to Bigquery.The dataset contains different cases in the text columns that will cleaned and create sentiment analysis on the tweets content to check the sentiment from the begining of the war till now. Then, I will use Google Looker Studio to connect to Bigqquery and build the dashboard. 
 
 # Technologies
-- Python the main programmimg language for this project
-- Terraform as infastrucre and a code serivce
+- Python the main programmimg language for this project.
+- Terraform as infastrucre and a code serivce.
 - Google Cloud provider (GCS as the data lake, Bigquery as DWH, and Dataproc as platform for performing ETL operations.
 - Prefect orchestration tool.
-- Google Looker Studio to build the insights
+- Google Looker Studio to build the insights.
 
-# Creating a project on Google Cloud
-- go to [google apis](https://cloud.google.com/) 
+# Creating a Project on Google Cloud
+- go to [google apis](https://cloud.google.com/) .
 - create a new project.
 - go to "I AM&Admin" serivce to create a serivce account which will give credentials to use it to access the created serivces:- GCS, Google BigQuery, and Dataproc
 - enable APIs of these serivces.
 - run this in your cmd export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
 - install google sdk cli to interact with the google serivces.
 
-# Building the google serivces using terraform
-- Download and install Terraform
+# Building the Google Serivces using Terraform
+- Download and install Terraform.
 - check terraform version using terraform -version command. 
 - start terraform init
 - terraform plan -var="project=<your-gcp-project-id>" add the id of your google project.
-- go back to your google accout and check the newly created serivces
+- go back to your google accout and check the newly created serivces.
 
-# Prefect as orchestration tool.
+# Prefect as Orchestration tool
 - pip install prefect
 - open prefect cloud and create a new workplace.
 - run '''prefect cloud login''' to auth your prefect account.
 
-# moving data from local machine to gcs
-As the dataset already stored as csvs in kaggle, I found that it would be more easily for reproducing the pipeline again to move the data from kaggle to gcs direcly with downloading it to local machine or server that would take money and time. However, I will keep the downloading scenario also if someone will be happy with that.
-approach1: If you are interested in kaggle please follow the following steps:
+# Moving Dataset from Kaggle to GCS
+As the dataset already stored as csvs in kaggle, I found that it would be more easily for reproducing the pipeline again to move the data from kaggle to gcs direcly with downloading it to local machine or server (VM instance) that would take money and time. However, I will keep the downloading scenario also if someone will be happy with that.
+## approach1: If you are interested in kaggle please follow the following steps:
 1- sign in kaggle and set your account.
 2- create new juypter notebook inside kaggle Home.
 3- inside the notebook add the dataset "🇺🇦 Ukraine Conflict Twitter Dataset"
-4- from addons choose Google Cloud services and attach cloud storage to your notebook
+4- from add-ons choose Google Cloud services and attach cloud storage to your notebook
 5- use the script from data pipeline/move_dataset_to_gcs.ipynb and run it in your notebook, the dataset will move directly. it will take no time compared to the other solution.
 
-approach2: 
-uncomment the lines inside the flow function and run the script data_pipline.py Afer adding the required paramters like the name of dataset, target path in which the data will be downloaded, and if of your bucket to upload the dataset
+## approach2: 
+uncomment the lines inside the flow function and run the script data_pipline.py as mention in the section "How to run this project" Afer adding the required paramters like the name of dataset, target path in which the data will be downloaded, and if of your bucket to upload the dataset
 
-# spark job on dataproc
-for the data processing, I will use Dataproc google cloud service to create a spark cluster and submit the job. I used the python client libraries to create, submit, and delete the cluster after finishing the job.
+# Spark Job on Dataproc
+for the data processing, I will use Dataproc google cloud service to create a spark cluster and submit the job. 
+ I used the python client libraries to create, submit, and delete the cluster after finishing the job. The spark job is mainly creating the reuired schema, renameing some colums, and drop others and cast the columns datatypes. Then., I read the files from the gcs bucket folder adding some options to clean the data. After that drop the duplicates to make sure that our records are unique. The main google of the data to get the sentiment analysis based on the "text" column that contain the tweets content. After that we write our final df as a table in bigquery.
+  
 # How to run this project
 - git clone the git repo.
 - go to the folder that contains data-pipeline, terraform folders and create virtualen:- python3 -m venv env
