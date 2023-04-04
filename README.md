@@ -1,5 +1,12 @@
 # Ukraine-Conflict-Twitter-Data-Pipeline
-In this project, I will create a data pipeline to move data from kaggle to gcs then to BigQuery stored as table. I will use spark job on Dataproc cluster to process the data from gcs to bigquery and make all of the reuired transformation and partioning before pushing the data to Bigquery. Then, I will use Google Looker Studio to connect to Bigqquery and build the dashboard. 
+In this project, I will create a data pipeline to move data from kaggle to gcs then to BigQuery stored as table. The dataset consists around 400 csv files that contains the tweets content related to the Ukraine Conflict from frin April 2022 till now. The dataset is updated everyday on kaggle dataset [https://www.kaggle.com/datasets/bwandowando/ukraine-russian-crisis-twitter-dataset-1-2-m-rows] and I will move the files on daily basis also to gcs. I will use spark job on Dataproc cluster to process the data from gcs to bigquery and make all of the required transformation and partioning before pushing the data to Bigquery.The dataset contains different cases in the text columns that will cleaned and create sentiment analysis on the tweets content to check the sentiment from the begining of the war till now. Then, I will use Google Looker Studio to connect to Bigqquery and build the dashboard. 
+
+# Technologies
+- Python the main programmimg language for this project
+- Terraform as infastrucre and a code serivce
+- Google Cloud provider (GCS as the data lake, Bigquery as DWH, and Dataproc as platform for performing ETL operations.
+- Prefect orchestration tool.
+- Google Looker Studio to build the insights
 
 # Creating a project on Google Cloud
 - go to [google apis](https://cloud.google.com/) 
