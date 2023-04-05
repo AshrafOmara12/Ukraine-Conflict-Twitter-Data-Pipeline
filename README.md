@@ -30,19 +30,22 @@ In this project, I will create a data pipeline to move data from kaggle to gcs t
 
 # Moving Dataset from Kaggle to GCS
 As the dataset already stored as csvs in kaggle, I found that it would be more easily for reproducing the pipeline again to move the data from kaggle to gcs direcly with downloading it to local machine or server (VM instance) that would take money and time. However, I will keep the downloading scenario also if someone will be happy with that.
-## approach1: If you are interested in kaggle please follow the following steps:
+## Approach 1: If you are interested in kaggle please follow the following steps:
 - sign in kaggle and set your account.
 - create new juypter notebook inside kaggle Home.
 - inside the notebook add the dataset "🇺🇦 Ukraine Conflict Twitter Dataset"
 - from add-ons choose Google Cloud services and attach cloud storage to your notebook
 - use the script from data pipeline/move_dataset_to_gcs.ipynb and run it in your notebook, the dataset will move directly. it will take no time compared to the other solution.
 
-## approach2: 
+## Approach 2: 
 uncomment the lines inside the flow function and run the script data_pipline.py as mention in the section "How to run this project" Afer adding the required paramters like the name of dataset, target path in which the data will be downloaded, and if of your bucket to upload the dataset
 
 # Spark Job on Dataproc
 for the data processing, I will use Dataproc google cloud service to create a spark cluster and submit the job. 
- I used the python client libraries to create, submit, and delete the cluster after finishing the job. The spark job is mainly creating the reuired schema, renameing some colums, and drop others and cast the columns datatypes. Then., I read the files from the gcs bucket folder adding some options to clean the data. After that drop the duplicates to make sure that our records are unique. The main google of the data to get the sentiment analysis based on the "text" column that contain the tweets content. After that we write our final df as a table in bigquery.
+ I used the python client libraries to create, submit, and delete the cluster after finishing the job. The spark job is mainly creating the required schema, renameing some colums, and drop others and cast the columns datatypes. Then, I read the files from the gcs bucket folder adding some options to clean the data. After that drop the duplicates to make sure that our records are unique. The main goal of the data to get the sentiment analysis based on the "text" column that contain the tweets content which is cleaned. I used TextBlob library to make this analysis and I install some packages on the top of the nodes of the VM. You can fie this startup.sh file inside the code folder.
+ After that we write our final df as a table in bigquery.
+ Please note that if you decide to process the whole dataset choose the suitable region that contains sufficient qoutes from I AM serivce then go to qoutes. 
+ The job take around 2.5 hourse to move the initial load files. 
   
 # How to run this project
 - git clone the git repo.
