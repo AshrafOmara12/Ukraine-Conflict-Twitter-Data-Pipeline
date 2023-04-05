@@ -48,12 +48,19 @@ for the data processing, I will use Dataproc google cloud service to create a sp
  The job take around 2.5 hourse to move the initial load files. 
   
 # How to run this project
-- git clone the git repo.
-- go to the folder that contains data-pipeline, terraform folders and create virtualen:- python3 -m venv env
+- git clone the repo.
+- go to the folder that contains data-pipeline, terraform folders and create virtualen:- python3 -m venv env and install reuirements.txt
 - create a google project as explained in the section [Creating a project on Google Cloud], enable serivces apis and create serivce account with permission for the used serivces.
 - go to terraform folder and : run terraform init, then terraform plan. and finally terraform apply. it will require the project id please catch it from your google account and if you need to change gcs bucket name, bigquery dataset, or region you can do this in the variables.ttf file. 
 - check your GCP and then GCS and bigquery and make sure that the serivces are created correctly.
 - move the dataset from kaggle to GCS:- please follow the steps in section "moving data from local machine to gcs"
+- My GCS bucket like this:
+ ![image](https://user-images.githubusercontent.com/56610966/230196070-c216eac2-225e-4ab3-806f-22dde95740cc.png)
+- BigQuery:
+ ![image](https://user-images.githubusercontent.com/56610966/230196268-dbb02d52-c6b0-4407-87c7-3c0695c56205.png)
+- Dataproc
+ ![image](https://user-images.githubusercontent.com/56610966/230197784-965fe371-1695-459d-bf1a-796da7d4c15d.png)
+
 - run the following command 
   $python data_pipeline.py \
         --initial gs://dtc_data_lake_ukraine-tweets-381418/data/ \  <!-- This is the intial load path of the dataset after uploading it -->
