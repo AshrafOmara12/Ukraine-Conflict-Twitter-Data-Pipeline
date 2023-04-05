@@ -1,5 +1,5 @@
 # Ukraine-Conflict-Twitter-Data-Pipeline
-In this project, I will create a data pipeline to move data from kaggle to gcs then to BigQuery stored as table. The dataset consists around 400 csv files that contains the tweets content related to the Ukraine Conflict from frin April 2022 till now. The dataset is updated everyday on kaggle dataset [https://www.kaggle.com/datasets/bwandowando/ukraine-russian-crisis-twitter-dataset-1-2-m-rows] with size around 20 GB,  and I will move the files on daily basis also to gcs. I will use spark job on Dataproc cluster to process the data from gcs to bigquery and make all of the required transformation and partioning before pushing the data to Bigquery.The dataset contains different cases in the text columns that will cleaned and create sentiment analysis on the tweets content to check the sentiment from the begining of the war till now. Then, I will use Google Looker Studio to connect to Bigqquery and build the dashboard. 
+In this project, I will create a data pipeline to move data from kaggle to gcs then to BigQuery stored as table. The dataset consists around 400 csv files that contains the tweets content related to the Ukraine Conflict from April 2022 till now. The dataset is updated everyday on kaggle dataset [https://www.kaggle.com/datasets/bwandowando/ukraine-russian-crisis-twitter-dataset-1-2-m-rows] with size around 20 GB now,  and I will move the files on daily basis also to gcs. I will create spark job on Dataproc cluster to process the data from gcs to bigquery and make all of the required transformation and partioning before pushing the data to Bigquery.The dataset contains different cases in the text columns that will cleaned and create sentiment analysis on the tweets content to check the sentiment from the begining of the war till now. Then, I will use Google Looker Studio to connect to Bigqquery and build the dashboard. 
 
 # Technologies
 - Python the main programmimg language for this project.
@@ -66,5 +66,9 @@ for the data processing, I will use Dataproc google cloud service to create a sp
 - go to google looker studio and create a new report, connect to your bigquery, and start building your dashboard. 
 
 # Dashboard
-I have created 2 pages contains some graphs to show the sentiment analysis as a pie chart, and time series graph for the tweets count from the begining till now, also bar graph and google map graphs. Here is the link of the dashboard:[Dashboard]( https://lookerstudio.google.com/reporting/3ab0ab8b-7e45-4c9c-8b38-75e0bd780b2c )
+I have created 2 pages contains some graphs to show the sentiment analysis as a pie chart, and time series graph for the tweets count from the begining till now, also bar graph and google map graphs. Here is the link of the dashboard: [Dashboard]( https://lookerstudio.google.com/reporting/3ab0ab8b-7e45-4c9c-8b38-75e0bd780b2c )
+ 
+# special thanks
+ 
+ I need to that the zoomcamp team for this amazing journy in which I learned many things and communicate with al ot of amazing people. Also, I need to thank the owner of the data set for his great work of extracting this huge dataset.
 
