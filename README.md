@@ -70,7 +70,8 @@ for the data processing, I will use Dataproc google cloud service to create a sp
 
 # Dashboard
 I have created 2 pages contains some graphs to show the sentiment analysis as a pie chart, and time series graph for the tweets count from the begining till now, also bar graph and google map graphs. Here is the link of the dashboard: [Dashboard]( https://lookerstudio.google.com/reporting/3ab0ab8b-7e45-4c9c-8b38-75e0bd780b2c )
- 
+ ![image](https://user-images.githubusercontent.com/56610966/230194759-6d78c339-b30f-47d8-a881-e019f6b8c32a.png)
+
 # special thanks
  
  I need to that the zoomcamp team for this amazing journy in which I learned many things and communicate with al ot of amazing people. Also, I need to thank the owner of the data set for his great work of extracting this huge dataset.
