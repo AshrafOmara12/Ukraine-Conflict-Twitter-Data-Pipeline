@@ -63,5 +63,8 @@ for the data processing, I will use Dataproc google cloud service to create a sp
         --file_spark_job spark_job.py \ <!-- the name of the spark job file -->
         --delta gs://dtc_data_lake_ukraine-tweets-381418/delta/ <!-- the path of the delta load files -->
 - check the cleaned, partioned and insights table in your bigquery
-- go to google looker studio and create a new report, connect to your bigquery, and start building your dashboard.
+- go to google looker studio and create a new report, connect to your bigquery, and start building your dashboard. 
+
+# Dashboard
+I have created 2 pages contains some graphs to show the sentiment analysis as a pie chart, and time series graph for the tweets count from the begining till now, also bar graph and google map graphs. Here is the link of the dashboard:[Dashboard]( https://lookerstudio.google.com/reporting/3ab0ab8b-7e45-4c9c-8b38-75e0bd780b2c )
 
