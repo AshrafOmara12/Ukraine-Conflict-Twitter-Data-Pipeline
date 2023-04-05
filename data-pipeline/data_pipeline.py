@@ -95,7 +95,7 @@ def upload_blob(bucket_name, folder_name):
                 f"File {file} uploaded to {check_name+'.gzip'}."
             )
 
-@task(name="dataproc spark job", description="In this task, I will create a spark cluster, submit a job and then deleting it", log_prints=True)
+@task(name="dataproc spark job", description="In this task, I will create a spark cluster, submit a job and then deleting it", log_prints=True, timeout_seconds=7200)
 def spark_job_cluster(project_id, region, cluster_name, gcs_bucket, folder, spark_filename):
     ''' The default max time out for prefect task is 15 mins or 900 sec. I add 3600 sec as 1 hour for this task'''
     # Create the cluster client.
@@ -109,8 +109,8 @@ def spark_job_cluster(project_id, region, cluster_name, gcs_bucket, folder, spar
         "cluster_name": cluster_name,
         "config": {
             "master_config": {"num_instances": 1, "machine_type_uri": "n1-standard-2"},
-            "worker_config": {"num_instances": 2, "machine_type_uri": "n1-standard-2"},
-            "initialization_actions": [ {"executable_file": f"gs://{gcs_bucket}/startup.sh"}]
+            "worker_config": {"num_instances": 3, "machine_type_uri": "n1-standard-2"},
+            "initialization_actions": [ {"executable_file": f"gs://{gcs_bucket}/code/startup.sh"}]
         },
     }
 
@@ -199,7 +199,7 @@ def data_pipeline():
     #     rename_files('combined_files')
     # list_files_in_gcs("dtc_data_lake_ukraine-tweets-381418")
     # upload_blob("dtc_data_lake_ukraine-tweets-381418", "combined_files")
-    df_intial = pd.read_csv(f'gs://dtc_data_lake_ukraine-tweets-381418/code/code_load.csv')
+    df_intial = pd.read_csv(f'gs://dtc_data_lake_ukraine-tweets-381418/code/load.csv')
     if df_intial.loc[:, 'check'].item() ==0:
         print("This is the task for inital load that will run once")
         spark_job_cluster(args.project_id,args.cluster_region, args.cluster_name, args.bucket_name, args.folder ,args.file_spark_job)

@@ -27,12 +27,23 @@ bucket = "dtc_data_lake_ukraine-tweets-381418"
 spark.conf.set('temporaryGcsBucket', bucket)
 
 def get_sentiment(text):
-    blob = TextBlob(text)
-    return blob.sentiment.polarity
-def remove_rt(x): return re.sub('RT @\w+: ', " ", x)
+    try:
+        blob = TextBlob(text)
+        return blob.sentiment.polarity
+    except TypeError:
+        print(text)
+        return 0
+def remove_rt(x): 
+    try:
+        return re.sub('RT @\w+: ', " ", x)
+    except TypeError:
+        return 'invalid text'
  
-def rt(x): return re.sub(
-    "(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", x)
+def rt(x): 
+    try:
+        return re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", x)
+    except TypeError:
+        return 'invalid text'
 
 def spark_job(data_folder: str, mode: str, output: str):
     schema = types.StructType([
@@ -74,12 +85,12 @@ def spark_job(data_folder: str, mode: str, output: str):
     df_files = df_files.withColumn('cleaned_text', remove_rt_udf("text"))
     df_files = df_files.withColumn('text_cleaned', rt_udf("text"))
     df_files = df_files.withColumn("text_cleaned",f.lower(f.col("text_cleaned")))
-    df_files = df_files.drop("text", "cleaned_text") 
     sentiment_udf = udf(get_sentiment, types.FloatType())
     df_files = df_files.withColumn("sentiment", sentiment_udf("text_cleaned"))
     df_files = df_files.withColumn('sentiment_analysis', when(df_files['sentiment'] > 0, "positive") \
                                 .when(df_files['sentiment'] < 0, "negative").otherwise("neutral"))
 
+    df_files = df_files.dropDuplicates()
     df_files.write.format('bigquery') \
         .option('table', output) \
         .mode(f'{mode}') \
@@ -87,12 +98,12 @@ def spark_job(data_folder: str, mode: str, output: str):
         .save()
     
 if __name__ == "__main__":
-    df_intial = pd.read_csv('gs://dtc_data_lake_ukraine-tweets-381418/code/code_load.csv')
+    df_intial = pd.read_csv('gs://dtc_data_lake_ukraine-tweets-381418/code/load.csv')
     if df_intial.loc[:, 'check'].item() == 0:
         print("This is the task for inital load that will run once")
         spark_job(initial, "overwrite", output_path)
         print('now we will change the value of the storage in the csv file')
         df_intial.loc[:, 'check'] = 1
-        df_intial.to_csv('gs://dtc_data_lake_ukraine-tweets-381418/code/code_load.csv', index=False)
+        df_intial.to_csv('gs://dtc_data_lake_ukraine-tweets-381418/code/load.csv', index=False)
     else:
-         spark_job("gs://dtc_data_lake_ukraine-tweets-381418/delta/", "append")
+         spark_job("gs://dtc_data_lake_ukraine-tweets-381418/delta/", "append", output_path)
