@@ -15,13 +15,14 @@ from datetime import timedelta
 parser = argparse.ArgumentParser(description='My PySpark job')
 parser.add_argument('--initial', type=str, help='Input files path')
 parser.add_argument('--output', type=str, help='Output path')
+parser.add_argument('--bucket_name', type=str, help='Output path')
+parser.add_argument('--delta', type=str, help='Output path')
 parser.add_argument('--project_id', type=str, help='Output path')
 parser.add_argument('--cluster_region', type=str, help='Output path')
 parser.add_argument('--cluster_name', type=str, help='Output path')
-parser.add_argument('--bucket_name', type=str, help='Output path')
 parser.add_argument('--folder', type=str, help='Output path')
 parser.add_argument('--file_spark_job', type=str, help='Output path')
-parser.add_argument('--delta', type=str, help='Output path')
+
 args = parser.parse_args()
 
 @task()
@@ -130,7 +131,7 @@ def spark_job_cluster(project_id, region, cluster_name, gcs_bucket, folder, spar
     job = {
         "placement": {"cluster_name": cluster_name},
         "pyspark_job": {"main_python_file_uri": "gs://{}/{}/{}".format(gcs_bucket,folder ,spark_filename),
-                        "args" : [args.initial, args.output],
+                        "args" : [args.initial, args.output, args.bucket_name, args.delta],
                         "jar_file_uris": ["gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar"]},
     }
 
@@ -199,7 +200,7 @@ def data_pipeline():
     #     rename_files('combined_files')
     # list_files_in_gcs("dtc_data_lake_ukraine-tweets-381418")
     # upload_blob("dtc_data_lake_ukraine-tweets-381418", "combined_files")
-    df_intial = pd.read_csv(f'gs://dtc_data_lake_ukraine-tweets-381418/code/load.csv')
+    df_intial = pd.read_csv(f'gs://{args.bucket_name}/code/load.csv')
     if df_intial.loc[:, 'check'].item() ==0:
         print("This is the task for inital load that will run once")
         spark_job_cluster(args.project_id,args.cluster_region, args.cluster_name, args.bucket_name, args.folder ,args.file_spark_job)
