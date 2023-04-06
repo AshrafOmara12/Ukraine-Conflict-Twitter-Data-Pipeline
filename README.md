@@ -42,10 +42,10 @@ uncomment the lines inside the flow function and run the script data_pipline.py 
 
 # Spark Job on Dataproc
 for the data processing, I will use Dataproc google cloud service to create a spark cluster and submit the job. 
- I used the python client libraries to create, submit, and delete the cluster after finishing the job. The spark job is mainly creating the required schema, renameing some colums, and drop others and cast the columns datatypes. Then, I read the files from the gcs bucket folder adding some options to clean the data. After that drop the duplicates to make sure that our records are unique. The main goal of the data to get the sentiment analysis based on the "text" column that contain the tweets content which is cleaned. I used TextBlob library to make this analysis and I install some packages on the top of the nodes of the VM. You can fie this startup.sh file inside the code folder.
- After that we write our final df as a table in bigquery.
+ I used the python client libraries to create, submit, and delete the cluster after finishing the job. The spark job is mainly creating the required schema, renameing some colums, and drop others and cast the columns datatypes. Then, I read the files from the gcs bucket folder adding some options to clean the data. After that I drop the duplicates to make sure that our records are unique. The main goal of the data to get the sentiment analysis based on the "text" column that contain the tweets content which is cleaned. I used TextBlob library to make this analysis and I install some packages on the top of the nodes of the VMs using this startup.sh file inside the code folder.
+ After that I write our final df as a table in bigquery.
  Please note that if you decide to process the whole dataset choose the suitable region that contains sufficient qoutes from I AM serivce then go to qoutes. 
- The job take around 2.5 hourse to move the initial load files. 
+ The job take around 2.5 hourse to move the initial load files. Also, you can move all data and process only 5 files for testing. all you need to choose the path of the initial load that contains 5 files. 
   
 # How to run this project
 - git clone the repo.
