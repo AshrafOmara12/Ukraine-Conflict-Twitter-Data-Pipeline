@@ -38,7 +38,7 @@ As the dataset already stored as csvs in kaggle, I found that it would be more e
 - use the script from data pipeline/move_dataset_to_gcs.ipynb and run it in your notebook, the dataset will move directly. it will take no time compared to the other solution.
 
 ## Approach 2: 
-uncomment the lines inside the flow function and run the script data_pipline.py as mention in the section "How to run this project" Afer adding the required paramters like the name of dataset, target path in which the data will be downloaded, and if of your bucket to upload the dataset
+uncomment the lines inside the flow function and run the script data_pipline.py as mention in the section "How to run this project" Afer adding the required paramters like the name of dataset, target path in which the data will be downloaded.
 
 # Spark Job on Dataproc
 for the data processing, I will use Dataproc google cloud service to create a spark cluster and submit the job. 
