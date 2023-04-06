@@ -49,7 +49,7 @@ for the data processing, I will use Dataproc google cloud service to create a sp
   
 # How to run this project
 - git clone the repo.
-- go to the folder that contains data-pipeline, terraform folders and create virtualen:- python3 -m venv env and install reuirements.txt
+- go to the folder that contains data-pipeline, terraform folders and create virtualen:- python3 -m venv env then activate your env and install reuirements.txt
 - create a google project as explained in the section [Creating a project on Google Cloud], enable serivces apis and create serivce account with permission for the used serivces.
 - go to terraform folder and : run terraform init, then terraform plan. and finally terraform apply. it will require the project id please catch it from your google account and if you need to change gcs bucket name, bigquery dataset, or region you can do this in the variables.ttf file. 
 - check your GCP and then GCS and bigquery and make sure that the serivces are created correctly.
