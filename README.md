@@ -48,13 +48,21 @@ for the data processing, I will use Dataproc google cloud service to create a sp
  The job take around 2.5 hourse to move the initial load files. 
   
 # How to run this project
-- git clone the git repo.
-- go to the folder that contains data-pipeline, terraform folders and create virtualen:- python3 -m venv env
+- git clone the repo.
+- go to the folder that contains data-pipeline, terraform folders and create virtualen:- python3 -m venv env and install reuirements.txt
 - create a google project as explained in the section [Creating a project on Google Cloud], enable serivces apis and create serivce account with permission for the used serivces.
 - go to terraform folder and : run terraform init, then terraform plan. and finally terraform apply. it will require the project id please catch it from your google account and if you need to change gcs bucket name, bigquery dataset, or region you can do this in the variables.ttf file. 
 - check your GCP and then GCS and bigquery and make sure that the serivces are created correctly.
-- move the dataset from kaggle to GCS:- please follow the steps in section "moving data from local machine to gcs"
-- run the following command 
+- move the dataset from kaggle to GCS:- please follow the steps in section "moving data from local machine to gcs" 
+- - run  gsutil cp -r code gs://dtc_data_lake_ukraine-tweets-381418/ to push the code to google cloud storage
+- My GCS bucket like this:
+ ![image](https://user-images.githubusercontent.com/56610966/230196070-c216eac2-225e-4ab3-806f-22dde95740cc.png)
+- BigQuery:
+ ![image](https://user-images.githubusercontent.com/56610966/230196268-dbb02d52-c6b0-4407-87c7-3c0695c56205.png)
+- Dataproc
+ ![image](https://user-images.githubusercontent.com/56610966/230197784-965fe371-1695-459d-bf1a-796da7d4c15d.png)
+
+- run the following command inside the data-pipeline folder
   $python data_pipeline.py \
         --initial gs://dtc_data_lake_ukraine-tweets-381418/data/ \  <!-- This is the intial load path of the dataset after uploading it -->
         --output ukraine_tweets_all.ukraine-tweets-analysis \  <!-- This is the output of the bigquery table -->
@@ -70,8 +78,17 @@ for the data processing, I will use Dataproc google cloud service to create a sp
 
 # Dashboard
 I have created 2 pages contains some graphs to show the sentiment analysis as a pie chart, and time series graph for the tweets count from the begining till now, also bar graph and google map graphs. Here is the link of the dashboard: [Dashboard]( https://lookerstudio.google.com/reporting/3ab0ab8b-7e45-4c9c-8b38-75e0bd780b2c )
+ ![image](https://user-images.githubusercontent.com/56610966/230194759-6d78c339-b30f-47d8-a881-e019f6b8c32a.png)
+![image](https://user-images.githubusercontent.com/56610966/230195149-0a695855-b7c8-451c-bbc9-a9810db4a651.png)
+
+ # Enhancement
+ - Adding CI/CD test
+ - transform the data processing to kafka streaming processing 
+ - use the cloud function to deploy the code on google.
+ - Analysis the hashtags
+
  
-# special thanks
+# Special Thanks
  
  I need to that the zoomcamp team for this amazing journy in which I learned many things and communicate with al ot of amazing people. Also, I need to thank the owner of the data set for his great work of extracting this huge dataset.
 
