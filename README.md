@@ -62,7 +62,7 @@ for the data processing, I will use Dataproc google cloud service to create a sp
 - Dataproc
  ![image](https://user-images.githubusercontent.com/56610966/230197784-965fe371-1695-459d-bf1a-796da7d4c15d.png)
 
-- run the following command 
+- run the following command inside the data-pipeline folder
   $python data_pipeline.py \
         --initial gs://dtc_data_lake_ukraine-tweets-381418/data/ \  <!-- This is the intial load path of the dataset after uploading it -->
         --output ukraine_tweets_all.ukraine-tweets-analysis \  <!-- This is the output of the bigquery table -->
@@ -81,6 +81,13 @@ I have created 2 pages contains some graphs to show the sentiment analysis as a 
  ![image](https://user-images.githubusercontent.com/56610966/230194759-6d78c339-b30f-47d8-a881-e019f6b8c32a.png)
 ![image](https://user-images.githubusercontent.com/56610966/230195149-0a695855-b7c8-451c-bbc9-a9810db4a651.png)
 
+ # Enhancement
+ - Adding CI/CD test
+ - transform the data processing to kafka streaming processing 
+ - use the cloud function to deploy the code on google.
+ - Analysis the hashtags
+
+ 
 # Special Thanks
  
  I need to that the zoomcamp team for this amazing journy in which I learned many things and communicate with al ot of amazing people. Also, I need to thank the owner of the data set for his great work of extracting this huge dataset.
