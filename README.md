@@ -53,7 +53,8 @@ for the data processing, I will use Dataproc google cloud service to create a sp
 - create a google project as explained in the section [Creating a project on Google Cloud], enable serivces apis and create serivce account with permission for the used serivces.
 - go to terraform folder and : run terraform init, then terraform plan. and finally terraform apply. it will require the project id please catch it from your google account and if you need to change gcs bucket name, bigquery dataset, or region you can do this in the variables.ttf file. 
 - check your GCP and then GCS and bigquery and make sure that the serivces are created correctly.
-- move the dataset from kaggle to GCS:- please follow the steps in section "moving data from local machine to gcs"
+- move the dataset from kaggle to GCS:- please follow the steps in section "moving data from local machine to gcs" 
+- - run  gsutil cp -r code gs://dtc_data_lake_ukraine-tweets-381418/ to push the code to google cloud storage
 - My GCS bucket like this:
  ![image](https://user-images.githubusercontent.com/56610966/230196070-c216eac2-225e-4ab3-806f-22dde95740cc.png)
 - BigQuery:
@@ -80,7 +81,7 @@ I have created 2 pages contains some graphs to show the sentiment analysis as a 
  ![image](https://user-images.githubusercontent.com/56610966/230194759-6d78c339-b30f-47d8-a881-e019f6b8c32a.png)
 ![image](https://user-images.githubusercontent.com/56610966/230195149-0a695855-b7c8-451c-bbc9-a9810db4a651.png)
 
-# special thanks
+# Special Thanks
  
  I need to that the zoomcamp team for this amazing journy in which I learned many things and communicate with al ot of amazing people. Also, I need to thank the owner of the data set for his great work of extracting this huge dataset.
 
