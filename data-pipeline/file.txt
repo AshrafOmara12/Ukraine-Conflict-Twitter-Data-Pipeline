@@ -1,7 +1,7 @@
 python data_pipeline.py \
 --initial gs://dtc_data_lake_ukraine-tweets-381418/data/ \
---output ukraine_tweets_all.ukraine-tweets-analysis-final \
---bucket_name dtc_data_lake_ukraine-tweets-381418 \
+--output ukraine_tweets_all.ukraine-tweets-analysis-final \ 
+--bucket_name dtc_data_lake_ukraine-tweets-381418 \ 
 --delta gs://dtc_data_lake_ukraine-tweets-381418/delta/ \
 --project_id ukraine-tweets-381418 \
 --cluster_region asia-east2 \
