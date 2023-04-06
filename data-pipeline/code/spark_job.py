@@ -94,16 +94,16 @@ def spark_job(data_folder: str, mode: str, output: str):
     df_files.write.format('bigquery') \
         .option('table', output) \
         .mode(f'{mode}') \
-        .partitionBy("tweetcreatedts", "language") \
+        .partitionBy("tweet_creation_date") \
         .save()
     
 if __name__ == "__main__":
-    df_intial = pd.read_csv('gs://dtc_data_lake_ukraine-tweets-381418/code/load.csv')
+    df_intial = pd.read_csv(f'gs://{bucket_name}/code/load.csv')
     if df_intial.loc[:, 'check'].item() == 0:
         print("This is the task for inital load that will run once")
         spark_job(initial, "overwrite", output_path)
         print('now we will change the value of the storage in the csv file')
         df_intial.loc[:, 'check'] = 1
-        df_intial.to_csv('gs://dtc_data_lake_ukraine-tweets-381418/code/load.csv', index=False)
+        df_intial.to_csv(f'gs://{bucket_name}/code/load.csv', index=False)
     else:
          spark_job(delta_load_path, "append", output_path)

@@ -212,7 +212,7 @@ def data_pipeline():
         blobs = bucket.list_blobs(prefix="delta")
         for blob in blobs:
             file_name = blob.name.split('/')[1]
-            move_blob(args.bucket_name,blob.name,  args.bucket_name,f"code/{file_name}")
+            move_blob(args.bucket_name,blob.name,  args.bucket_name,f"data/{file_name}")
 
 if __name__ == "__main__":
     data_pipeline()
