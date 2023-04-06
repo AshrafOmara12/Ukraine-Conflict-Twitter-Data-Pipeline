@@ -62,17 +62,7 @@ for the data processing, I will use Dataproc google cloud service to create a sp
 - Dataproc
  ![image](https://user-images.githubusercontent.com/56610966/230197784-965fe371-1695-459d-bf1a-796da7d4c15d.png)
 
-- run the following command inside the data-pipeline folder
-  $python data_pipeline.py \
-        --initial gs://dtc_data_lake_ukraine-tweets-381418/data/ \  <!-- This is the intial load path of the dataset after uploading it -->
-        --output ukraine_tweets_all.ukraine-tweets-analysis \  <!-- This is the output of the bigquery table -->
-        --project_id ukraine-tweets-381418 \ <!-- project id -->
-        --cluster_region asia-east1 \ <!-- the cluster region that will run the spark job on it -->
-        --cluster_name ukraine-tweets \ <!-- the cluster name that will run the spark job on it -->
-        --bucket_name dtc_data_lake_ukraine-tweets-381418 \ <!-- the bucket name that contains the data folder -->
-        --folder code \ <!-- the folder inside the bucket that contains the spark_job.py, load.csv, and startup.sh files -->
-        --file_spark_job spark_job.py \ <!-- the name of the spark job file -->
-        --delta gs://dtc_data_lake_ukraine-tweets-381418/delta/ <!-- the path of the delta load files -->
+- run the command from file.txt inside the data-pipeline folder.
 - check the cleaned, partioned and insights table in your bigquery
 - go to google looker studio and create a new report, connect to your bigquery, and start building your dashboard. 
 
